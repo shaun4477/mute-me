@@ -1,5 +1,6 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
+#import <ServiceManagement/ServiceManagement.h>
 
 static NSString *githubURL = @"https://github.com/pixel-point/mute-me";
 static NSString *projectURL = @"https://muteme.pixelpoint.io/";
@@ -50,6 +51,11 @@ static void *MASObservingContext = &MASObservingContext;
     NSString *buildLabel = [buildVersion isEqualToString:@"1"] ? @"" :[NSString stringWithFormat:@"(%@)", buildVersion];
     NSString *versionFieldValue = [NSString stringWithFormat:@"Version %@%@", version, buildLabel];
     [self.versionTextFieldCell setStringValue:versionFieldValue];
+}
+
+- (void)dealloc
+{
+    [[NSUserDefaults standardUserDefaults] removeObserver:self forKeyPath:MASCustomShortcutKey context:MASObservingContext];
 }
 
 - (void) observeValueForKeyPath: (NSString*) keyPath ofObject: (id) object change: (NSDictionary*) change context: (void*) context
